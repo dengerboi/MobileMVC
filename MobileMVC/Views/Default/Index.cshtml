@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>PRODUCT REGISTRATION FORM</h2>
+@Html.ValidationSummary(true)
+@using (Html.BeginForm())
+{
+    <table border="1">
+        <tr>
+            <td>Name</td>
+            <td>@Html.TextBox("txtname")</td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>@Html.TextBox("txtdesc")</td>
+        </tr>
+        <tr>
+            <td>Manufacturer</td>
+            <td>@Html.TextBox("txtdmanu")</td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td><input type="number" name="txtsalary" /></td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td>
+                <select name="ddlcat">
+                    <option value="Electronics">Electronics</option>
+                    <option value="Home">Home</option>
+                    <option value="Snack">Snack</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Add Product" /></td>
+        </tr>
+    </table>
+}
+<div>
+    @Html.ActionLink("Select employee", "GetProduct");
+    @*HTML HELPER FOR HREF *@
+</div>

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<MobileMVC.Models.Product>
+@{
+    ViewBag.Title = "GetProduct";
+}
+
+<h2>GetProduct</h2>
+<table border="1">
+    <tr>
+        <th>Product ID</th>
+        <th>Product Name</th>
+        <th>Product Description</th>
+        <th>Product Manufacturer</th>
+        <th>Product Price</th>
+        <th>Product Group</th>
+    </tr>
+    @foreach (var m in Model)
+    {
+        <tr>
+            <td>@m.ProductID</td>
+            <td>@m.Pname</td>
+            <td>@m.PDesc</td>
+            <td>@m.PManu</td>
+            <td>@m.Price</td>
+            <td>@m.Pcat</td>
+        </tr>
+    }
+</table>
+@Html.ActionLink("<<Back to insert", "Index");
