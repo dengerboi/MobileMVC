@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "GetProductByPrice";
+}
+
+<h2>GetProductByPrice</h2>
+<form method="post">
+    @Html.ValidationSummary(true)
+    <div>
+        Enter Product Category : <input type="text" name="category" />
+    </div>
+    <div>
+        Enter Price : <input type="number" name="price" />
+    </div>
+    <div>
+        <input type="submit" value="Select" />
+    </div>
+
+    @if (Session["data"] != null)
+    {
+        IQueryable<MobileMVC.Models.Product> prd =
+            (IQueryable<MobileMVC.Models.Product>)Session["data"];//typecasting
+        <table border="1">
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Product Description</th>
+                <th>Product Manufacturer</th>
+                <th>Product Price</th>
+                <th>Product Group</th>
+            </tr>
+            @foreach (var m in prd)
+            {
+                <tr>
+                    <td>@m.ProductID</td>
+                    <td>@m.Pname</td>
+                    <td>@m.PDesc</td>
+                    <td>@m.PManu</td>
+                    <td>@m.Price</td>
+                    <td>@m.Pcat</td>
+                </tr>
+            }
+        </table>
+
+    }
+</form>
+@Html.ActionLink("<<Back to insert", "Index")

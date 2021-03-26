@@ -38,5 +38,31 @@ namespace MobileMVC.Controllers
             return View(data);//model binding
 
         }
+        //retrieve product data from db based on condition
+        [HttpGet]
+        public ActionResult GetProductByPrice()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult GetProductByPrice(string cat, decimal price = 0)
+        {
+            cat = Request.Form["category"];
+            price = Convert.ToDecimal(Request.Form["price"]);
+            var query = from t in db.Products
+                        where t.Pcat == cat && t.Price > price
+                        select t;
+            if (query.Count()==0)
+            {
+                ModelState.AddModelError("","No data found");
+                return View();
+            }
+            else
+            {//will pass data from controller to view
+                Session["data"] = query;
+            }
+            return View();
+        }
+
     }
 }
