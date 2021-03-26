@@ -110,5 +110,29 @@ namespace MobileMVC.Controllers
             return RedirectToAction("GetProduct");
 
         }
+        [HttpGet]
+        public ActionResult CategorySelect()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CategorySelect(string cat)
+        {
+            cat = Request.Form["category"];
+            var query = from t in db.Products
+                        where t.Pcat == cat
+                        select t;
+            if (query.Count() == 0)
+            {
+                ModelState.AddModelError("", "No data found");
+                return View();
+            }
+            else
+            {//will pass data from controller to view
+                Session["data"] = query;
+            }
+            return View();
+        }
+
     }
 }
