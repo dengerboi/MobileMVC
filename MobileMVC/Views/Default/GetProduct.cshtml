@@ -12,17 +12,21 @@
         <th>Product Manufacturer</th>
         <th>Product Price</th>
         <th>Product Group</th>
+        <th>Edit</th>
+        <th>Delete</th>
     </tr>
     @foreach (var m in Model)
     {
-        <tr>
-            <td>@m.ProductID</td>
-            <td>@m.Pname</td>
-            <td>@m.PDesc</td>
-            <td>@m.PManu</td>
-            <td>@m.Price</td>
-            <td>@m.Pcat</td>
-        </tr>
+<tr>
+    <td>@m.ProductID</td>
+    <td>@m.Pname</td>
+    <td>@m.PDesc</td>
+    <td>@m.PManu</td>
+    <td>@m.Price</td>
+    <td>@m.Pcat</td>
+    <td>@Html.ActionLink("Edit " + m.ProductID, "UpdateProduct", "Default", new { id = m.ProductID },null)</td>
+    <td>@Html.ActionLink("Delete " + m.ProductID, "DeleteProduct", "Default", new { id = m.ProductID },null)</td>
+</tr>
     }
 </table>
 @Html.ActionLink("<<Back to insert", "Index")

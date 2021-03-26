@@ -64,5 +64,38 @@ namespace MobileMVC.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult UpdateProduct (int id)
+        {
+            var data = db.Products.Where(x => x.ProductID == id).SingleOrDefault();
+            return View(data);
+        }
+        [HttpPost]
+        public ActionResult UpdateProduct()
+        {
+            int id = Convert.ToInt32(Request.Form["pid"]);
+            var olddata = db.Products.Where(x => x.ProductID == id).SingleOrDefault();
+            var newname = Request.Form["pname"];
+            var newdesc = Request.Form["pdesc"];
+            var newmanu = Request.Form["pmanu"];
+            var newprice = Convert.ToDecimal(Request.Form["price"]);
+            var newcat = Request.Form["pcat"];
+            olddata.Pname = newname;
+            olddata.PDesc = newdesc;
+            olddata.Pcat = newcat;
+            olddata.PManu = newmanu;
+            olddata.Price = newprice;
+            var res = db.SaveChanges();
+            if (res > 0)
+                return RedirectToAction("GetProduct");
+            return View();
+        }
+        [HttpGet]
+
+        public ActionResult DeleteProduct(int id)
+        {
+            return View();
+        }
+
     }
 }
