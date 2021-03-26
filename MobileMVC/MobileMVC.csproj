@@ -165,6 +165,7 @@
     <Content Include="Views\Default\GetProduct.cshtml" />
     <Content Include="Views\Default\GetProductByPrice.cshtml" />
     <Content Include="Views\Default\UpdateProduct.cshtml" />
+    <Content Include="Views\Default\DeleteProduct.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

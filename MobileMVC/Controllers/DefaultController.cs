@@ -52,9 +52,9 @@ namespace MobileMVC.Controllers
             var query = from t in db.Products
                         where t.Pcat == cat && t.Price > price
                         select t;
-            if (query.Count()==0)
+            if (query.Count() == 0)
             {
-                ModelState.AddModelError("","No data found");
+                ModelState.AddModelError("", "No data found");
                 return View();
             }
             else
@@ -65,7 +65,7 @@ namespace MobileMVC.Controllers
         }
 
         [HttpGet]
-        public ActionResult UpdateProduct (int id)
+        public ActionResult UpdateProduct(int id)
         {
             var data = db.Products.Where(x => x.ProductID == id).SingleOrDefault();
             return View(data);
@@ -87,15 +87,28 @@ namespace MobileMVC.Controllers
             olddata.Price = newprice;
             var res = db.SaveChanges();
             if (res > 0)
-                return RedirectToAction("GetProduct");
-            return View();
+                return RedirectToAction("GetProduct");//hyperlink to getproduct
+            return RedirectToAction("Index");
         }
         [HttpGet]
 
         public ActionResult DeleteProduct(int id)
         {
-            return View();
+            var data = db.Products.Where(x => x.ProductID == id).SingleOrDefault();
+            return View(data);
         }
 
+        [HttpPost]
+        public ActionResult DeleteProduct()
+        {
+            int id = Convert.ToInt32(Request.Form["pid"]);
+            var delrow = db.Products.Where(x => x.ProductID == id).SingleOrDefault();
+            db.Products.Remove(delrow);
+            var res = db.SaveChanges();
+            if (res > 0)
+                return RedirectToAction("GetProduct");//hyperlink to getproduct
+            return RedirectToAction("GetProduct");
+
+        }
     }
 }
