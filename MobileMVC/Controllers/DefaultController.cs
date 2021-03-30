@@ -10,7 +10,7 @@ namespace MobileMVC.Controllers
     public class DefaultController : Controller
     {
         // GET: Default
-        masterEntities db = new masterEntities();
+        LTIMVC2Entities1 db = new LTIMVC2Entities1();
 
         [HttpGet]
         public ActionResult Index()
@@ -68,6 +68,7 @@ namespace MobileMVC.Controllers
         public ActionResult UpdateProduct(int id)
         {
             var data = db.Products.Where(x => x.ProductID == id).SingleOrDefault();
+            ViewData["prodinfo"] = new SelectList(db.Products.ToList(), "ProductID", "PDesc");
             return View(data);
         }
         [HttpPost]
@@ -76,7 +77,7 @@ namespace MobileMVC.Controllers
             int id = Convert.ToInt32(Request.Form["pid"]);
             var olddata = db.Products.Where(x => x.ProductID == id).SingleOrDefault();
             var newname = Request.Form["pname"];
-            var newdesc = Request.Form["pdesc"];
+            var newdesc = Request.Form["prodinfo"];
             var newmanu = Request.Form["pmanu"];
             var newprice = Convert.ToDecimal(Request.Form["price"]);
             var newcat = Request.Form["pcat"];
@@ -85,6 +86,7 @@ namespace MobileMVC.Controllers
             olddata.Pcat = newcat;
             olddata.PManu = newmanu;
             olddata.Price = newprice;
+            
             var res = db.SaveChanges();
             if (res > 0)
                 return RedirectToAction("GetProduct");//hyperlink to getproduct
@@ -133,6 +135,25 @@ namespace MobileMVC.Controllers
             }
             return View();
         }
-
+        [HttpGet]
+        public ActionResult InsertOrder()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult InsertOrder(OrderInfo o)
+        {
+            if (ModelState.IsValid)
+            {
+                db.OrderInfoes.Add(o);
+                var res = db.SaveChanges();
+                if (res > 0)
+                {
+                    Response.Write("<script type = 'text/JavaScript'>" + "alert('New Proj Created')" + "</script>");
+                    ModelState.AddModelError("","New Model Added");
+                }
+            }
+            return View();
+        }
     }
 }

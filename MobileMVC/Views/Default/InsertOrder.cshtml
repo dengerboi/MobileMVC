@@ -1,0 +1,31 @@
+﻿@model MobileMVC.Models.OrderInfo
+@{
+    ViewBag.Title = "InsertOrder";
+}
+
+<h2>InsertOrder</h2>
+<form method="post">
+    @Html.ValidationSummary(true)
+    <div>
+        Enter ID of Product
+        @Html.TextBoxFor(x=>x.opid)
+        @Html.ValidationMessageFor(x=>x.opid)
+    </div>
+    <div>
+        Enter Quantity
+        @Html.TextBoxFor(x=>x.qty)
+        @Html.ValidationMessageFor(x=>x.qty)
+    </div>
+    <div>
+        Enter Payment Mode (Cash = 0 | Card = 1)
+        @Html.TextBoxFor(x=>x.payment)
+        @Html.ValidationMessageFor(x=>x.payment)
+    </div>
+    <div>
+        Enter Payment Status( Not Paid - 0 | Paid = 1)
+        @Html.TextBoxFor(x=>x.status1)
+        @Html.ValidationMessageFor(x=>x.status1)
+    </div>
+    <input type="submit" value="Submit Order" />
+</form>
+

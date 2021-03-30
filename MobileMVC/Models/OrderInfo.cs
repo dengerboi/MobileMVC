@@ -12,20 +12,14 @@ namespace MobileMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class OrderInfo
     {
-        public Product()
-        {
-            this.OrderInfoes = new HashSet<OrderInfo>();
-        }
+        public int OrderID { get; set; }
+        public Nullable<int> opid { get; set; }
+        public int qty { get; set; }
+        public Nullable<int> payment { get; set; }
+        public Nullable<int> status1 { get; set; }
     
-        public int ProductID { get; set; }
-        public string Pname { get; set; }
-        public string PDesc { get; set; }
-        public string PManu { get; set; }
-        public decimal Price { get; set; }
-        public string Pcat { get; set; }
-    
-        public virtual ICollection<OrderInfo> OrderInfoes { get; set; }
+        public virtual Product Product { get; set; }
     }
 }
