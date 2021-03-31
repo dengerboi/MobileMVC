@@ -68,7 +68,7 @@ namespace MobileMVC.Controllers
         public ActionResult UpdateProduct(int id)
         {
             var data = db.Products.Where(x => x.ProductID == id).SingleOrDefault();
-            ViewData["prodinfo"] = new SelectList(db.Products.ToList(), "ProductID", "PDesc");
+            ViewData["prodinfo"] = new SelectList(db.Products.Distinct().ToList(), "Pcat", "Pcat");
             return View(data);
         }
         [HttpPost]
@@ -77,10 +77,10 @@ namespace MobileMVC.Controllers
             int id = Convert.ToInt32(Request.Form["pid"]);
             var olddata = db.Products.Where(x => x.ProductID == id).SingleOrDefault();
             var newname = Request.Form["pname"];
-            var newdesc = Request.Form["prodinfo"];
+            var newdesc = Request.Form["pdesc"];
             var newmanu = Request.Form["pmanu"];
             var newprice = Convert.ToDecimal(Request.Form["price"]);
-            var newcat = Request.Form["pcat"];
+            var newcat = Request.Form["prodinfo"];
             olddata.Pname = newname;
             olddata.PDesc = newdesc;
             olddata.Pcat = newcat;

@@ -14,7 +14,7 @@
         ProductName : <input type="text" name="pname" value=@Model.Pname readonly />
     </div>
     <div>
-        Product Description : @Html.DropDownList("prodinfo", ViewData["ProductID"] as SelectList)
+        Product Description :<input type="text" name="pdesc" value=@Model.PDesc />
     </div>
     <div>
         Product Manufacturer : <input type="text" name="pmanu" value=@Model.PManu />
@@ -23,7 +23,7 @@
         Product Price : <input type="number" name="price" value=@Model.Price />
     </div>
     <div>
-        Product Category : <input type="text" name="pcat" value=@Model.Pcat />
+        Product Category : @Html.DropDownList("prodinfo", ViewData["Pcat"] as SelectList)
     </div>
 
     <div>
