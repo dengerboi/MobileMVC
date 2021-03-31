@@ -10,15 +10,13 @@
 namespace MobileMVC.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class MSreplication_options
+    public partial class sp_SelectOrderByID_Result
     {
-        public string optname { get; set; }
-        public bool value { get; set; }
-        public int major_version { get; set; }
-        public int minor_version { get; set; }
-        public int revision { get; set; }
-        public int install_failures { get; set; }
+        public int OrderID { get; set; }
+        public Nullable<int> opid { get; set; }
+        public int qty { get; set; }
+        public Nullable<int> payment { get; set; }
+        public Nullable<int> status1 { get; set; }
     }
 }

@@ -136,6 +136,12 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_SelectOrderByID_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_SelectProductsByID_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +164,8 @@
     <Content Include="Views\Default\CategorySelect.cshtml" />
     <Content Include="Views\Default\InsertOrder.cshtml" />
     <Content Include="Views\Default\GetProductOrder.cshtml" />
+    <Content Include="Views\Default\SelectProductById.cshtml" />
+    <Content Include="Views\Default\SelectOrderByID.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

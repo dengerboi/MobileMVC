@@ -166,5 +166,54 @@ namespace MobileMVC.Controllers
             return View(data);
                 
         }
+        [HttpGet]
+        public ActionResult SelectProductById()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SelectProductById(string command)
+        {
+            if (command == "Select")
+            {
+                int? id = Convert.ToInt32(Request.Form["pid"]);
+                var result = db.sp_SelectProductsByID(id).SingleOrDefault();
+                if (result == null)
+                    ModelState.AddModelError("", "Invalid ID");
+                else
+                    ModelState.AddModelError("", result.ProductID + " | " + result.Pname);
+                ViewBag.data = result;
+            }
+            if (command == "Update")
+            {
+                string newpname = Request.Form["pname"];
+                string newdesc = Request.Form["desc"];
+                int? pid = Convert.ToInt32(Request.Form["projid"]);
+                var res = db.sp_UpdateProduct(pid, newpname, newdesc);
+                if (res > 0)
+                    ModelState.AddModelError("","Data Updated!");
+
+            }
+            return View();
+        }
+        [HttpGet]
+        public ActionResult SelectOrderByID()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SelectOrderByID(int? id)
+        {
+            id = Convert.ToInt32(Request.Form["oid"]);
+            var result = db.sp_SelectOrderByID(id).SingleOrDefault();
+            if (result == null)
+                ModelState.AddModelError("", "Invalid Order ID");
+            else
+            {
+                ModelState.AddModelError("", result.OrderID + "," + result.opid + " , " + result.qty + " , " + result.payment + result.status1);
+                ViewBag.data = result;
+            }
+                return View();
+        }
     }
 }

@@ -38,6 +38,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_SelectOrderByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="oid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_SelectProductsByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_UpdateProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pid" Type="int" Mode="In" />
+          <Parameter Name="pname" Type="varchar" Mode="In" />
+          <Parameter Name="descr" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="LTIMVC2ModelStoreContainer">
           <EntitySet Name="OrderInfo" EntityType="Self.OrderInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -50,14 +61,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LTIMVC2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="LTIMVC2Entities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="OrderInfoes" EntityType="LTIMVC2Model.OrderInfo" />
-          <EntitySet Name="Products" EntityType="LTIMVC2Model.Product" />
-          <AssociationSet Name="FK__OrderInfo__opid__36B12243" Association="LTIMVC2Model.FK__OrderInfo__opid__36B12243">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="OrderInfo" EntitySet="OrderInfoes" />
-          </AssociationSet>
-          </EntityContainer>
         <EntityType Name="OrderInfo">
           <Key>
             <PropertyRef Name="OrderID" />
@@ -67,23 +70,23 @@
           <Property Name="qty" Type="Int32" Nullable="false" />
           <Property Name="payment" Type="Int32" />
           <Property Name="status1" Type="Int32" />
-          <NavigationProperty Name="Product" Relationship="LTIMVC2Model.FK__OrderInfo__opid__36B12243" FromRole="OrderInfo" ToRole="Product" />
-          </EntityType>
+          <NavigationProperty Name="Product" Relationship="Self.FK__OrderInfo__opid__36B12243" FromRole="OrderInfo" ToRole="Product" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductID" />
           </Key>
           <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Pname" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="PDesc" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PManu" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Pcat" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="OrderInfoes" Relationship="LTIMVC2Model.FK__OrderInfo__opid__36B12243" FromRole="Product" ToRole="OrderInfo" />
+          <Property Name="Pname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PManu" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Pcat" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="OrderInfoes" Relationship="Self.FK__OrderInfo__opid__36B12243" FromRole="Product" ToRole="OrderInfo" />
         </EntityType>
         <Association Name="FK__OrderInfo__opid__36B12243">
-          <End Type="LTIMVC2Model.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="LTIMVC2Model.OrderInfo" Role="OrderInfo" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ProductID" />
@@ -93,7 +96,41 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <EntityContainer Name="LTIMVC2Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="OrderInfoes" EntityType="Self.OrderInfo" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <AssociationSet Name="FK__OrderInfo__opid__36B12243" Association="Self.FK__OrderInfo__opid__36B12243">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderInfo" EntitySet="OrderInfoes" />
+          </AssociationSet>
+          <FunctionImport Name="sp_SelectProductsByID" ReturnType="Collection(LTIMVC2Model.sp_SelectProductsByID_Result)">
+          <Parameter Name="pid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_UpdateProduct">
+            <Parameter Name="pid" Mode="In" Type="Int32" />
+            <Parameter Name="pname" Mode="In" Type="String" />
+            <Parameter Name="descr" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_SelectOrderByID" ReturnType="Collection(LTIMVC2Model.sp_SelectOrderByID_Result)">
+            <Parameter Name="oid" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_SelectProductsByID_Result">
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Pname" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="PDesc" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="PManu" Nullable="false" MaxLength="30" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Pcat" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="sp_SelectOrderByID_Result">
+          <Property Type="Int32" Name="OrderID" Nullable="false" />
+          <Property Type="Int32" Name="opid" Nullable="true" />
+          <Property Type="Int32" Name="qty" Nullable="false" />
+          <Property Type="Int32" Name="payment" Nullable="true" />
+          <Property Type="Int32" Name="status1" Nullable="true" />
+        </ComplexType>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -102,26 +139,50 @@
           <EntitySetMapping Name="OrderInfoes">
             <EntityTypeMapping TypeName="LTIMVC2Model.OrderInfo">
               <MappingFragment StoreEntitySet="OrderInfo">
-                <ScalarProperty Name="status1" ColumnName="status1" />
-                <ScalarProperty Name="payment" ColumnName="payment" />
-                <ScalarProperty Name="qty" ColumnName="qty" />
-                <ScalarProperty Name="opid" ColumnName="opid" />
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="opid" ColumnName="opid" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="status1" ColumnName="status1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="LTIMVC2Model.Product">
               <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="Pcat" ColumnName="Pcat" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="PManu" ColumnName="PManu" />
-                <ScalarProperty Name="PDesc" ColumnName="PDesc" />
-                <ScalarProperty Name="Pname" ColumnName="Pname" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Pname" ColumnName="Pname" />
+                <ScalarProperty Name="PDesc" ColumnName="PDesc" />
+                <ScalarProperty Name="PManu" ColumnName="PManu" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Pcat" ColumnName="Pcat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_SelectProductsByID" FunctionName="LTIMVC2Model.Store.sp_SelectProductsByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LTIMVC2Model.sp_SelectProductsByID_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Pname" ColumnName="Pname" />
+                <ScalarProperty Name="PDesc" ColumnName="PDesc" />
+                <ScalarProperty Name="PManu" ColumnName="PManu" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Pcat" ColumnName="Pcat" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_UpdateProduct" FunctionName="LTIMVC2Model.Store.sp_UpdateProduct" />
+          <FunctionImportMapping FunctionImportName="sp_SelectOrderByID" FunctionName="LTIMVC2Model.Store.sp_SelectOrderByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LTIMVC2Model.sp_SelectOrderByID_Result">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="opid" ColumnName="opid" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="status1" ColumnName="status1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

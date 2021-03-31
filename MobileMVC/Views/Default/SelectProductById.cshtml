@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "SelectProductById";
+}
+
+<h2>SelectProductById</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <div>
+        Product ID : <input type="text" name="pid" />
+    </div>
+    <div>
+        <input type="submit" value="Select" name="command" />
+    </div>
+    <hr />
+    if (ViewBag.data != null)
+    {
+        <div>
+            Product ID : <input type="text" name="projid" value=@ViewBag.data.ProductID readonly />
+        </div>
+        <div>
+            Product Name : <input type="text" name="pname" value=@ViewBag.data.Pname />
+        </div>
+        <div>
+            Product Description : <input type="text" name="desc" value=@ViewBag.data.PDesc />
+        </div>
+        <div>
+            <input type="submit" value="Update" name="command" />
+        </div>
+    }
+}
+<div>
+    @Html.ActionLink("<<<Back to Home", "Index")
+</div>
