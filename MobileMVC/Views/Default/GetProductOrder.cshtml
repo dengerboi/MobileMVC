@@ -1,0 +1,36 @@
+﻿@* We can not import multiple tables, so we instead use custom tables*@
+@*Make a custom class and import it*@
+
+@model IEnumerable<MobileMVC.Models.CustomProductOrder>
+
+@{
+    ViewBag.Title = "GetProductOrder";
+}
+
+<h2>GetProductOrder</h2>
+<table border="1">
+    <tr>
+        <th>Product ID</th>
+        <th>Product name</th>
+        <th>Product Category</th>
+        <th>Order ID</th>
+        <th>Quantity</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        @foreach(var m in Model)
+        {
+            <tr>
+                <td>@m.ProductID</td>
+                <td>@m.Pname</td>
+                <td>@m.Pcat</td>
+                <td>@m.OrderID</td>
+                <td>@m.qty</td>
+                <td>@m.PDesc</td>
+            </tr>
+
+        }
+</table>
+<div>
+    @Html.ActionLink("Home", "Index")
+</div>

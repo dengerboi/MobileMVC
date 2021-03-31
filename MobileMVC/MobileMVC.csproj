@@ -114,6 +114,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomProductOrder.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -156,6 +157,7 @@
     <Content Include="Views\Default\DeleteProduct.cshtml" />
     <Content Include="Views\Default\CategorySelect.cshtml" />
     <Content Include="Views\Default\InsertOrder.cshtml" />
+    <Content Include="Views\Default\GetProductOrder.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

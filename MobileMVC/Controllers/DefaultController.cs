@@ -155,5 +155,16 @@ namespace MobileMVC.Controllers
             }
             return View();
         }
+        [HttpGet]
+        public ActionResult GetProductOrder()
+        {
+            var data = (from p in db.Products
+                       join o in db.OrderInfoes
+            on p.ProductID equals o.opid
+                       select new CustomProductOrder{ ProductID = p.ProductID, Pname = p.Pname,Pcat = p.Pcat,PDesc =  p.PDesc,
+                                                      OrderID = o.OrderID, qty = o.qty}).ToList();
+            return View(data);
+                
+        }
     }
 }
